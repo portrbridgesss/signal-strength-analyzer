@@ -58,6 +58,7 @@
             listBox_Locations.Name = "listBox_Locations";
             listBox_Locations.Size = new Size(246, 279);
             listBox_Locations.TabIndex = 3;
+            listBox_Locations.SelectedIndexChanged += listBox_Locations_SelectedIndexChanged;
             // 
             // buttonAnalyze
             // 
@@ -89,6 +90,7 @@
             panelColor.Name = "panelColor";
             panelColor.Size = new Size(461, 60);
             panelColor.TabIndex = 7;
+            panelColor.Paint += panelColor_Paint;
             // 
             // label1
             // 

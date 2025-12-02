@@ -3,9 +3,33 @@ namespace signalstrengthanalyzer
     public partial class mainMenu : Form
     {
         int clickCount = 0;
+
+
         public mainMenu()
         {
             InitializeComponent();
+            LoadLocations();
+        }
+        private void LoadLocations()
+        {
+            // Clear any existing items first
+            listBox_Locations.Items.Clear();
+
+            // **Replace this with your actual data source (e.g., reading from a file or database)**
+            List<string> locations = new List<string>
+    {
+        "Office Entrance",
+        "Conference Room (North)",
+        "Server Closet",
+        "Break Room",
+        "Outdoor Patio"
+    };
+
+            // Add each location string to the ListBox
+            foreach (string location in locations)
+            {
+                listBox_Locations.Items.Add(location);
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -41,7 +65,7 @@ namespace signalstrengthanalyzer
 
         private void panelColor_MouseClick(object sender, MouseEventArgs e)
         {
-            
+
             clickCount++;
             if (clickCount >= 5)
             {
@@ -59,6 +83,16 @@ namespace signalstrengthanalyzer
             ExitMenu f3 = new ExitMenu();
 
             f3.ShowDialog(); // Shows Form2 you can also use f2.Show() 
+        }
+
+        private void listBox_Locations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelColor_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
