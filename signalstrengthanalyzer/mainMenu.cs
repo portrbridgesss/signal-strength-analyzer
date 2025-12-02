@@ -31,5 +31,11 @@ namespace signalstrengthanalyzer
         {
 
         }
+
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            settingsMenu f2 = new settingsMenu();
+            f2.ShowDialog(); // Shows Form2 you can also use f2.Show() 
+        }
     }
 }
