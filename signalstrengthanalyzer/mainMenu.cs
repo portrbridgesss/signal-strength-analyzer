@@ -82,7 +82,7 @@ namespace signalstrengthanalyzer
         {
             ExitMenu f3 = new ExitMenu();
 
-            f3.ShowDialog(); // Shows Form2 you can also use f2.Show() 
+            f3.Show(); // Shows Form2 you can also use f2.Show() 
         }
 
         private void listBox_Locations_SelectedIndexChanged(object sender, EventArgs e)
