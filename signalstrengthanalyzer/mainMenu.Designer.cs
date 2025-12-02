@@ -125,7 +125,6 @@
             Name = "mainMenu";
             Text = "Form1";
             FormClosing += mainMenu_FormClosing;
-            Load += mainMenu_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

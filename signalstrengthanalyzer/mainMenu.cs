@@ -2,6 +2,7 @@ namespace signalstrengthanalyzer
 {
     public partial class mainMenu : Form
     {
+        int clickCount = 0;
         public mainMenu()
         {
             InitializeComponent();
@@ -38,18 +39,26 @@ namespace signalstrengthanalyzer
             f2.ShowDialog(); // Shows Form2 you can also use f2.Show() 
         }
 
-        private void mainMenu_Load(object sender, EventArgs e)
+        private void panelColor_MouseClick(object sender, MouseEventArgs e)
         {
-            adminPanel f1 = new adminPanel();
+            
+            clickCount++;
+            if (clickCount >= 5)
+            {
+                // Open the new form (e.g., Admin Panel or Secret Menu)
+                adminPanel secretForm = new adminPanel();
+                secretForm.ShowDialog();
 
-            f1.ShowDialog(); // Shows Form2 you can also use f2.Show() 
+                // 4. Reset the counter so you can do it again later
+                clickCount = 0;
+            }
         }
 
         private void mainMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ExitMenu f2 = new ExitMenu();
+            ExitMenu f3 = new ExitMenu();
 
-            f2.ShowDialog(); // Shows Form2 you can also use f2.Show() 
+            f3.ShowDialog(); // Shows Form2 you can also use f2.Show() 
         }
     }
 }
