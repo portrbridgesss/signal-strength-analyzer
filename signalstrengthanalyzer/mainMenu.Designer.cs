@@ -34,13 +34,15 @@
             buttonAnalyze = new Button();
             labelLocationInfo = new Label();
             buttonSettings = new Button();
+            panelColor = new Panel();
+            label1 = new Label();
             SuspendLayout();
             // 
             // labelStaticStatusText
             // 
             labelStaticStatusText.AutoSize = true;
             labelStaticStatusText.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelStaticStatusText.Location = new Point(358, 50);
+            labelStaticStatusText.Location = new Point(280, 100);
             labelStaticStatusText.Name = "labelStaticStatusText";
             labelStaticStatusText.Size = new Size(156, 21);
             labelStaticStatusText.TabIndex = 1;
@@ -51,7 +53,7 @@
             // 
             labelStatus.AutoSize = true;
             labelStatus.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelStatus.Location = new Point(358, 71);
+            labelStatus.Location = new Point(280, 121);
             labelStatus.Name = "labelStatus";
             labelStatus.Size = new Size(97, 21);
             labelStatus.TabIndex = 2;
@@ -63,26 +65,27 @@
             listBox_Locations.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             listBox_Locations.FormattingEnabled = true;
             listBox_Locations.ItemHeight = 25;
-            listBox_Locations.Location = new Point(12, 50);
+            listBox_Locations.Location = new Point(12, 100);
             listBox_Locations.Name = "listBox_Locations";
-            listBox_Locations.Size = new Size(340, 329);
+            listBox_Locations.Size = new Size(246, 279);
             listBox_Locations.TabIndex = 3;
             // 
             // buttonAnalyze
             // 
             buttonAnalyze.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonAnalyze.Location = new Point(358, 238);
+            buttonAnalyze.Location = new Point(280, 246);
             buttonAnalyze.Name = "buttonAnalyze";
             buttonAnalyze.Size = new Size(152, 99);
             buttonAnalyze.TabIndex = 4;
             buttonAnalyze.Text = "Analyze Current Connection";
             buttonAnalyze.UseVisualStyleBackColor = true;
+            buttonAnalyze.Click += buttonAnalyze_Click;
             // 
             // labelLocationInfo
             // 
             labelLocationInfo.AutoSize = true;
             labelLocationInfo.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelLocationInfo.Location = new Point(358, 118);
+            labelLocationInfo.Location = new Point(280, 168);
             labelLocationInfo.Name = "labelLocationInfo";
             labelLocationInfo.Size = new Size(97, 21);
             labelLocationInfo.TabIndex = 5;
@@ -92,24 +95,45 @@
             // buttonSettings
             // 
             buttonSettings.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonSettings.Location = new Point(12, 12);
+            buttonSettings.Location = new Point(357, 351);
             buttonSettings.Name = "buttonSettings";
             buttonSettings.Size = new Size(79, 31);
             buttonSettings.TabIndex = 6;
             buttonSettings.Text = "Settings";
             buttonSettings.UseVisualStyleBackColor = true;
             // 
+            // panelColor
+            // 
+            panelColor.BackColor = SystemColors.ActiveCaption;
+            panelColor.Dock = DockStyle.Top;
+            panelColor.Location = new Point(0, 0);
+            panelColor.Name = "panelColor";
+            panelColor.Size = new Size(461, 60);
+            panelColor.TabIndex = 7;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 75);
+            label1.Name = "label1";
+            label1.Size = new Size(156, 21);
+            label1.TabIndex = 8;
+            label1.Text = "Overall Area Status: ";
+            // 
             // mainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(536, 400);
+            ClientSize = new Size(461, 394);
+            Controls.Add(label1);
             Controls.Add(buttonSettings);
             Controls.Add(labelLocationInfo);
             Controls.Add(buttonAnalyze);
             Controls.Add(listBox_Locations);
             Controls.Add(labelStatus);
             Controls.Add(labelStaticStatusText);
+            Controls.Add(panelColor);
             Name = "mainMenu";
             Text = "Form1";
             ResumeLayout(false);
@@ -123,5 +147,7 @@
         private Button buttonAnalyze;
         private Label labelLocationInfo;
         private Button buttonSettings;
+        private Panel panelColor;
+        private Label label1;
     }
 }

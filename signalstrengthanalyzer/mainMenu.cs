@@ -26,5 +26,10 @@ namespace signalstrengthanalyzer
         {
 
         }
+
+        private void buttonAnalyze_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
