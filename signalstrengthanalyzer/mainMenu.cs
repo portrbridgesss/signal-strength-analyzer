@@ -37,5 +37,17 @@ namespace signalstrengthanalyzer
             settingsMenu f2 = new settingsMenu();
             f2.ShowDialog(); // Shows Form2 you can also use f2.Show() 
         }
+
+        private void mainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mainMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ExitMenu f2 = new ExitMenu();
+
+            f2.ShowDialog(); // Shows Form2 you can also use f2.Show() 
+        }
     }
 }
