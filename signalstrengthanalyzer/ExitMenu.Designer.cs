@@ -64,7 +64,7 @@
             button2.Name = "button2";
             button2.Size = new Size(178, 86);
             button2.TabIndex = 2;
-            button2.Text = "NO";
+            button2.Text = "NO!!!";
             button2.UseVisualStyleBackColor = false;
             // 
             // ExitMenu

@@ -37,9 +37,9 @@
             textBox1 = new TextBox();
             button6 = new Button();
             panel2 = new Panel();
+            button7 = new Button();
             lbladminProfile = new Label();
             panel3 = new Panel();
-            button7 = new Button();
             dataGridView1 = new DataGridView();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -133,6 +133,18 @@
             panel2.Size = new Size(749, 52);
             panel2.TabIndex = 5;
             // 
+            // button7
+            // 
+            button7.BackColor = SystemColors.MenuHighlight;
+            button7.ForeColor = SystemColors.ButtonHighlight;
+            button7.Location = new Point(112, 13);
+            button7.Name = "button7";
+            button7.Size = new Size(123, 24);
+            button7.TabIndex = 7;
+            button7.Text = "See Admin Profile";
+            button7.UseVisualStyleBackColor = false;
+            button7.Click += button7_Click;
+            // 
             // lbladminProfile
             // 
             lbladminProfile.AutoSize = true;
@@ -152,18 +164,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(749, 347);
             panel3.TabIndex = 6;
-            // 
-            // button7
-            // 
-            button7.BackColor = SystemColors.MenuHighlight;
-            button7.ForeColor = SystemColors.ButtonHighlight;
-            button7.Location = new Point(112, 13);
-            button7.Name = "button7";
-            button7.Size = new Size(123, 24);
-            button7.TabIndex = 7;
-            button7.Text = "See Admin Profile";
-            button7.UseVisualStyleBackColor = false;
-            button7.Click += button7_Click;
             // 
             // dataGridView1
             // 

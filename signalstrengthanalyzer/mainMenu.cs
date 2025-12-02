@@ -40,7 +40,9 @@ namespace signalstrengthanalyzer
 
         private void mainMenu_Load(object sender, EventArgs e)
         {
+            adminPanel f1 = new adminPanel();
 
+            f1.ShowDialog(); // Shows Form2 you can also use f2.Show() 
         }
 
         private void mainMenu_FormClosing(object sender, FormClosingEventArgs e)
