@@ -91,6 +91,7 @@
             panelColor.Size = new Size(461, 60);
             panelColor.TabIndex = 7;
             panelColor.Paint += panelColor_Paint;
+            panelColor.MouseClick += panelColor_MouseClick;
             // 
             // label1
             // 
