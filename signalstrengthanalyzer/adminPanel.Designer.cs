@@ -157,7 +157,7 @@
             // 
             button7.BackColor = SystemColors.MenuHighlight;
             button7.ForeColor = SystemColors.ButtonHighlight;
-            button7.Location = new Point(101, 13);
+            button7.Location = new Point(112, 13);
             button7.Name = "button7";
             button7.Size = new Size(123, 24);
             button7.TabIndex = 7;
