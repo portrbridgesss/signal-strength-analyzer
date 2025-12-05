@@ -24,7 +24,14 @@ namespace signalstrengthanalyzer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.DialogResult = DialogResult.Yes;
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.No;
+            this.Close();
         }
     }
 }

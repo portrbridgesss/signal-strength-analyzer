@@ -80,9 +80,21 @@ namespace signalstrengthanalyzer
 
         private void mainMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ExitMenu f3 = new ExitMenu();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                ExitMenu f3 = new ExitMenu();
 
-            f3.Show(); // Shows Form2 you can also use f2.Show() 
+                // Check what the user clicked in the ExitMenu
+                if (f3.ShowDialog() == DialogResult.Yes)
+                {
+                    // User said YES
+                }
+                else
+                {
+                    // User said NO 
+                    e.Cancel = true;
+                }
+            }
         }
 
         private void listBox_Locations_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,6 +103,11 @@ namespace signalstrengthanalyzer
         }
 
         private void panelColor_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void mainMenu_Load(object sender, EventArgs e)
         {
 
         }
