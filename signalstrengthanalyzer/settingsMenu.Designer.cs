@@ -41,6 +41,7 @@
             checkBoxDarkMode.TabIndex = 0;
             checkBoxDarkMode.Text = "Dark Mode";
             checkBoxDarkMode.UseVisualStyleBackColor = true;
+            checkBoxDarkMode.CheckedChanged += checkBoxDarkMode_CheckedChanged;
             // 
             // labelSettings
             // 
@@ -51,6 +52,7 @@
             labelSettings.Size = new Size(177, 55);
             labelSettings.TabIndex = 1;
             labelSettings.Text = "Settings";
+            labelSettings.Click += labelSettings_Click;
             // 
             // settingsMenu
             // 

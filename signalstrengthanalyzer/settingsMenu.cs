@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using signalstrengthanalyzer;
+using static signalstrengthanalyzer.DarkMode;
 
 namespace signalstrengthanalyzer
 {
@@ -15,6 +17,28 @@ namespace signalstrengthanalyzer
         public settingsMenu()
         {
             InitializeComponent();
+            checkBoxDarkMode.Checked = ThemeManager.IsDarkModeEnabled;
+            ThemeManager.ApplyTheme(this);
+
+        }
+
+        private void labelSettings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxDarkMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxDarkMode.Checked)
+            {
+                ThemeManager.ToggleTheme(true);
+                MessageBox.Show("Darkmode is now enabled!");
+            }
+            else
+            {
+                ThemeManager.ToggleTheme(false);
+                MessageBox.Show("Darkmode is now !");
+            }
         }
     }
 }
