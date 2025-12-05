@@ -52,6 +52,7 @@
             labelSettings.Size = new Size(177, 55);
             labelSettings.TabIndex = 1;
             labelSettings.Text = "Settings";
+            labelSettings.Click += labelSettings_Click;
             // 
             // settingsMenu
             // 
