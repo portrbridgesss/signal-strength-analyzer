@@ -3,7 +3,9 @@ namespace signalstrengthanalyzer
     public partial class mainMenu : Form
     {
         int clickCount = 0;
-
+        public string ResultSignal { get; set; }
+        public string ResultStatus { get; set; }
+        public string ResultLocation { get; set; }
 
         public mainMenu()
         {
@@ -55,8 +57,16 @@ namespace signalstrengthanalyzer
 
         private void buttonAnalyze_Click(object sender, EventArgs e)
         {
+            if (listBox_Locations.SelectedItem == null) return;
             diagnoseMenu f1 = new diagnoseMenu();
+            f1.LoadLocationsFromMain(listBox_Locations.Items);
+
             f1.ShowDialog();
+            ResultSignal = labelSelectedStatus.Text;
+            ResultStatus = labelSelectedStatus.Text;
+            ResultLocation = listBox_Locations.SelectedItem.ToString();
+
+
         }
 
         private void buttonSettings_Click(object sender, EventArgs e)

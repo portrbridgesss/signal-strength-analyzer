@@ -16,5 +16,23 @@ namespace signalstrengthanalyzer
         {
             InitializeComponent();
         }
+
+        private void checkBoxDarkMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxDarkMode.Checked)
+            {
+                // Dark Mode
+                this.BackColor = Color.FromArgb(30, 30, 30); // Dark Gray
+                this.ForeColor = Color.White;
+
+                // You would need to do this for the Main Menu too
+            }
+            else
+            {
+                // Light Mode
+                this.BackColor = SystemColors.Control;
+                this.ForeColor = Color.Black;
+            }
+        }
     }
 }

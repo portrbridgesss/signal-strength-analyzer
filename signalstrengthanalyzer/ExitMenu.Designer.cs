@@ -36,7 +36,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = SystemColors.ButtonHighlight;
+            label1.BackColor = SystemColors.ControlLight;
             label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
@@ -77,6 +77,7 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "ExitMenu";
             Text = "ExitMenu";
             ResumeLayout(false);

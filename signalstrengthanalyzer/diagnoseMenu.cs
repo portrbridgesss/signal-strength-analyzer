@@ -16,5 +16,46 @@ namespace signalstrengthanalyzer
         {
             InitializeComponent();
         }
+        Random random = new Random();
+
+
+        private void diagnoseMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonAnalyze_Click(object sender, EventArgs e)
+        {
+            int signalStrength = random.Next(-90, -30);
+
+            lblSignalStrength.Text = $"Signal: {signalStrength} dBm";
+
+            if (signalStrength > -50)
+            {
+                lblStatus.Text = "Excellent Connection";
+                lblStatus.ForeColor = Color.Green;
+            }
+            else if (signalStrength > -70)
+            {
+                lblStatus.Text = "Fair Connection";
+                lblStatus.ForeColor = Color.Orange;
+            }
+            else
+            {
+                lblStatus.Text = "Poor Connection";
+                lblStatus.ForeColor = Color.Red;
+            }
+
+
+        }
+        public void LoadLocationsFromMain(ListBox.ObjectCollection locations)
+        {
+            comboBox1.Items.Clear();
+            foreach (var item in locations)
+            {
+                comboBox1.Items.Add(item);
+            }
+        }
     }
+
 }
