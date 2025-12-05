@@ -56,7 +56,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(339, 236);
+            ClientSize = new Size(326, 164);
             Controls.Add(labelSettings);
             Controls.Add(checkBoxDarkMode);
             Name = "settingsMenu";

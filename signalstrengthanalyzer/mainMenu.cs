@@ -18,11 +18,12 @@ namespace signalstrengthanalyzer
             // **Replace this with your actual data source (e.g., reading from a file or database)**
             List<string> locations = new List<string>
     {
-        "Office Entrance",
-        "Conference Room (North)",
-        "Server Closet",
-        "Break Room",
-        "Outdoor Patio"
+        "A Building",
+        "Jubilee Library",
+        "Apo Pilo",
+        "JVD Building",
+        "Outdoor Patio",
+        "Tonus Gym"
     };
 
             // Add each location string to the ListBox
@@ -54,7 +55,8 @@ namespace signalstrengthanalyzer
 
         private void buttonAnalyze_Click(object sender, EventArgs e)
         {
-
+            diagnoseMenu f1 = new diagnoseMenu();
+            f1.ShowDialog();
         }
 
         private void buttonSettings_Click(object sender, EventArgs e)
@@ -69,11 +71,11 @@ namespace signalstrengthanalyzer
             clickCount++;
             if (clickCount >= 5)
             {
-                // Open the new form (e.g., Admin Panel or Secret Menu)
+                // Open the admin menu
                 adminPanel secretForm = new adminPanel();
                 secretForm.ShowDialog();
 
-                // 4. Reset the counter so you can do it again later
+                // Reset the counter 
                 clickCount = 0;
             }
         }
@@ -83,15 +85,13 @@ namespace signalstrengthanalyzer
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 ExitMenu f3 = new ExitMenu();
-
-                // Check what the user clicked in the ExitMenu
                 if (f3.ShowDialog() == DialogResult.Yes)
                 {
-                    // User said YES
+                    //YES, walang gagawin
                 }
                 else
                 {
-                    // User said NO 
+                    //NO, mag exit sya
                     e.Cancel = true;
                 }
             }
@@ -99,7 +99,14 @@ namespace signalstrengthanalyzer
 
         private void listBox_Locations_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listBox_Locations.SelectedItem != null)
+            {
+                labelSelectedStatus.Text = "Normal";
+                labelSelectedStatus.ForeColor = Color.Green;
 
+                labelOverallStatus.Text = "Normal";
+                labelOverallStatus.ForeColor = Color.Green;
+            }
         }
 
         private void panelColor_Paint(object sender, PaintEventArgs e)
@@ -108,6 +115,16 @@ namespace signalstrengthanalyzer
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBoxStatus_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelOverallStatus_Click(object sender, EventArgs e)
         {
 
         }

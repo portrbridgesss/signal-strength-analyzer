@@ -28,26 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            labelStatusText = new Label();
+            labelSelectedStatus = new Label();
             listBox_Locations = new ListBox();
             buttonAnalyze = new Button();
             buttonSettings = new Button();
             panelColor = new Panel();
+            labelHeaderName = new Label();
             label1 = new Label();
-            groupBox1 = new GroupBox();
-            groupBox1.SuspendLayout();
+            groupBoxStatus = new GroupBox();
+            labelOverallStatus = new Label();
+            panelColor.SuspendLayout();
+            groupBoxStatus.SuspendLayout();
             SuspendLayout();
             // 
-            // labelStatusText
+            // labelSelectedStatus
             // 
-            labelStatusText.AutoSize = true;
-            labelStatusText.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelStatusText.Location = new Point(8, 23);
-            labelStatusText.Name = "labelStatusText";
-            labelStatusText.Size = new Size(53, 21);
-            labelStatusText.TabIndex = 1;
-            labelStatusText.Text = "status";
-            labelStatusText.Click += label1_Click;
+            labelSelectedStatus.AutoSize = true;
+            labelSelectedStatus.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelSelectedStatus.Location = new Point(8, 23);
+            labelSelectedStatus.Name = "labelSelectedStatus";
+            labelSelectedStatus.Size = new Size(53, 21);
+            labelSelectedStatus.TabIndex = 1;
+            labelSelectedStatus.Text = "status";
+            labelSelectedStatus.Click += label1_Click;
             // 
             // listBox_Locations
             // 
@@ -85,6 +88,7 @@
             // panelColor
             // 
             panelColor.BackColor = SystemColors.ActiveCaption;
+            panelColor.Controls.Add(labelHeaderName);
             panelColor.Dock = DockStyle.Top;
             panelColor.Location = new Point(0, 0);
             panelColor.Name = "panelColor";
@@ -93,55 +97,83 @@
             panelColor.Paint += panelColor_Paint;
             panelColor.MouseClick += panelColor_MouseClick;
             // 
+            // labelHeaderName
+            // 
+            labelHeaderName.AutoSize = true;
+            labelHeaderName.Font = new Font("Consolas", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelHeaderName.ForeColor = Color.WhiteSmoke;
+            labelHeaderName.Location = new Point(3, 10);
+            labelHeaderName.Name = "labelHeaderName";
+            labelHeaderName.Size = new Size(449, 37);
+            labelHeaderName.TabIndex = 10;
+            labelHeaderName.Text = "Signal Strength Analyzer";
+            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 75);
+            label1.Location = new Point(12, 76);
             label1.Name = "label1";
             label1.Size = new Size(156, 21);
             label1.TabIndex = 8;
             label1.Text = "Overall Area Status: ";
             // 
-            // groupBox1
+            // groupBoxStatus
             // 
-            groupBox1.Controls.Add(labelStatusText);
-            groupBox1.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox1.Location = new Point(264, 100);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(185, 116);
-            groupBox1.TabIndex = 9;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Overall Area Status: ";
+            groupBoxStatus.Controls.Add(labelSelectedStatus);
+            groupBoxStatus.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            groupBoxStatus.Location = new Point(264, 100);
+            groupBoxStatus.Name = "groupBoxStatus";
+            groupBoxStatus.Size = new Size(185, 116);
+            groupBoxStatus.TabIndex = 9;
+            groupBoxStatus.TabStop = false;
+            groupBoxStatus.Text = "Selected Area Status: ";
+            groupBoxStatus.Enter += groupBoxStatus_Enter;
+            // 
+            // labelOverallStatus
+            // 
+            labelOverallStatus.AutoSize = true;
+            labelOverallStatus.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelOverallStatus.Location = new Point(158, 76);
+            labelOverallStatus.Name = "labelOverallStatus";
+            labelOverallStatus.Size = new Size(53, 21);
+            labelOverallStatus.TabIndex = 2;
+            labelOverallStatus.Text = "status";
+            labelOverallStatus.Click += labelOverallStatus_Click;
             // 
             // mainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(461, 394);
+            Controls.Add(labelOverallStatus);
             Controls.Add(label1);
             Controls.Add(buttonSettings);
             Controls.Add(buttonAnalyze);
             Controls.Add(listBox_Locations);
             Controls.Add(panelColor);
-            Controls.Add(groupBox1);
+            Controls.Add(groupBoxStatus);
             Name = "mainMenu";
             Text = "Form1";
             FormClosing += mainMenu_FormClosing;
             Load += mainMenu_Load;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            panelColor.ResumeLayout(false);
+            panelColor.PerformLayout();
+            groupBoxStatus.ResumeLayout(false);
+            groupBoxStatus.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private Label labelStatusText;
+        private Label labelSelectedStatus;
         private ListBox listBox_Locations;
         private Button buttonAnalyze;
         private Button buttonSettings;
         private Panel panelColor;
         private Label label1;
-        private GroupBox groupBox1;
+        private GroupBox groupBoxStatus;
+        private Label labelOverallStatus;
+        private Label labelHeaderName;
     }
 }
