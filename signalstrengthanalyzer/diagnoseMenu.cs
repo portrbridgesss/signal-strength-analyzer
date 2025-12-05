@@ -24,7 +24,16 @@ namespace signalstrengthanalyzer
 
         }
 
-        private void buttonAnalyze_Click(object sender, EventArgs e)
+        public void LoadLocationsFromMain(ListBox.ObjectCollection locations)
+        {
+            comboBox1.Items.Clear();
+            foreach (var item in locations)
+            {
+                comboBox1.Items.Add(item);
+            }
+        }
+
+        private void buttonAnalyze_Click_1(object sender, EventArgs e)
         {
             int signalStrength = random.Next(-90, -30);
 
@@ -46,19 +55,6 @@ namespace signalstrengthanalyzer
                 lblStatus.ForeColor = Color.Red;
             }
 
-
-        }
-        public void LoadLocationsFromMain(ListBox.ObjectCollection locations)
-        {
-            comboBox1.Items.Clear();
-            foreach (var item in locations)
-            {
-                comboBox1.Items.Add(item);
-            }
-        }
-
-        private void buttonAnalyze_Click_1(object sender, EventArgs e)
-        {
 
         }
 
