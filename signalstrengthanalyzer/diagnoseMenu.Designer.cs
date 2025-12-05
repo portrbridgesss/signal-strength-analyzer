@@ -56,6 +56,7 @@
             groupBoxDesignInfo.TabIndex = 1;
             groupBoxDesignInfo.TabStop = false;
             groupBoxDesignInfo.Text = "Device Information";
+            groupBoxDesignInfo.Enter += groupBoxDesignInfo_Enter;
             // 
             // lblStatus
             // 
@@ -94,7 +95,7 @@
             buttonAnalyze.TabIndex = 3;
             buttonAnalyze.Text = "Analyze";
             buttonAnalyze.UseVisualStyleBackColor = true;
-            buttonAnalyze.Click += buttonAnalyze_Click;
+            buttonAnalyze.Click += buttonAnalyze_Click_1;
             // 
             // diagnoseMenu
             // 
@@ -108,7 +109,6 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "diagnoseMenu";
             Text = "diagnoseMenu";
-            Load += diagnoseMenu_Load;
             groupBoxDesignInfo.ResumeLayout(false);
             groupBoxDesignInfo.PerformLayout();
             ResumeLayout(false);

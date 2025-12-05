@@ -41,7 +41,7 @@
             checkBoxDarkMode.TabIndex = 0;
             checkBoxDarkMode.Text = "Dark Mode";
             checkBoxDarkMode.UseVisualStyleBackColor = true;
-            checkBoxDarkMode.CheckedChanged += checkBoxDarkMode_CheckedChanged;
+            checkBoxDarkMode.CheckedChanged += checkBoxDarkMode_CheckedChanged_1;
             // 
             // labelSettings
             // 

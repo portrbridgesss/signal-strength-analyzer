@@ -1,5 +1,5 @@
 using signalstrengthanalyzer;
-using static signalstrengthanalyzer.DarkMode;
+
 namespace signalstrengthanalyzer
 {
     public partial class mainMenu : Form
@@ -13,7 +13,7 @@ namespace signalstrengthanalyzer
         {
             InitializeComponent();
             LoadLocations();
-            ThemeManager.ApplyTheme(this);
+
         }
         private void LoadLocations()
         {

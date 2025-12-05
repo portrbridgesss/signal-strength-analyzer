@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using signalstrengthanalyzer;
-using static signalstrengthanalyzer.DarkMode;
+
 
 namespace signalstrengthanalyzer
 {
@@ -17,7 +17,6 @@ namespace signalstrengthanalyzer
         public adminPanel()
         {
             InitializeComponent();
-            ThemeManager.ApplyTheme(this);
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -31,6 +30,11 @@ namespace signalstrengthanalyzer
         }
 
         private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
         {
 
         }
