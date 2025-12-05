@@ -14,10 +14,10 @@ namespace signalstrengthanalyzer
         }
         private void LoadLocations()
         {
-            // Clear any existing items first
+            // clear existing items first
             listBox_Locations.Items.Clear();
 
-            // **Replace this with your actual data source (e.g., reading from a file or database)**
+            // need to replace with actual txt file
             List<string> locations = new List<string>
     {
         "A Building",
