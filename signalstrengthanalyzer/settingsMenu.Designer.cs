@@ -41,6 +41,7 @@
             checkBoxDarkMode.TabIndex = 0;
             checkBoxDarkMode.Text = "Dark Mode";
             checkBoxDarkMode.UseVisualStyleBackColor = true;
+            checkBoxDarkMode.CheckedChanged += checkBoxDarkMode_CheckedChanged;
             // 
             // labelSettings
             // 
@@ -59,6 +60,7 @@
             ClientSize = new Size(326, 164);
             Controls.Add(labelSettings);
             Controls.Add(checkBoxDarkMode);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "settingsMenu";
             Text = "Settings";
             ResumeLayout(false);

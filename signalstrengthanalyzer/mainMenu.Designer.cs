@@ -153,6 +153,7 @@
             Controls.Add(listBox_Locations);
             Controls.Add(panelColor);
             Controls.Add(groupBoxStatus);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "mainMenu";
             Text = "Form1";
             FormClosing += mainMenu_FormClosing;
