@@ -14,7 +14,6 @@ namespace signalstrengthanalyzer
         private Random random = new Random();
         private List<SignalMeasurement> signalMeasurements = new List<SignalMeasurement>();
         private string currentView = "Dashboard";
-
         private string dbPath = Path.Combine(Application.StartupPath, "signals.db");
 
         public adminPanel()
@@ -33,7 +32,6 @@ namespace signalstrengthanalyzer
 
         private void InitializeDatabase()
         {
-            // SQLite-net will create the file automatically
             using (var conn = new SQLiteConnection(dbPath))
             {
                 conn.CreateTable<SignalMeasurement>();
@@ -56,7 +54,6 @@ namespace signalstrengthanalyzer
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     string metric = row.Cells[0].Value?.ToString() ?? "";
-
                     if (metric.Contains("Excellent")) row.DefaultCellStyle.BackColor = Color.LightGreen;
                     else if (metric.Contains("Fair")) row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                     else if (metric.Contains("Poor")) row.DefaultCellStyle.BackColor = Color.LightCoral;
@@ -68,7 +65,6 @@ namespace signalstrengthanalyzer
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     if (row.Cells["Signal Strength"].Value == null) continue;
-
                     int strength = Convert.ToInt32(row.Cells["Signal Strength"].Value);
                     if (strength > -50) row.DefaultCellStyle.BackColor = Color.LightGreen;
                     else if (strength > -70) row.DefaultCellStyle.BackColor = Color.Orange;
@@ -112,6 +108,39 @@ namespace signalstrengthanalyzer
             return "Poor";
         }
 
+        private void UpdateCurrentViewLabel()
+        {
+            if (label1 != null)
+            {
+                label1.Text = $"Current View: {currentView}";
+
+                // Change text color based on view
+                switch (currentView)
+                {
+                    case "Dashboard":
+                        label1.ForeColor = Color.Blue;
+                        break;
+                    case "Locations":
+                        label1.ForeColor = Color.Green;
+                        break;
+                    case "Reports":
+                        label1.ForeColor = Color.Orange;
+                        break;
+                    default:
+                        label1.ForeColor = Color.Black;
+                        break;
+                }
+            }
+        }
+
+        private bool IsColorDark(Color color)
+        {
+            // Standard formula for perceived brightness
+            double brightness = (color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
+            return brightness < 128;
+        }
+
+        // -------------------- DASHBOARD --------------------
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             ShowDashboard();
@@ -128,7 +157,9 @@ namespace signalstrengthanalyzer
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
             dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             currentView = "Dashboard";
+            UpdateCurrentViewLabel();
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Metric", typeof(string));
@@ -151,9 +182,7 @@ namespace signalstrengthanalyzer
         private double AverageSignal()
         {
             if (!signalMeasurements.Any()) return 0;
-            double sum = 0;
-            foreach (var s in signalMeasurements) sum += s.SignalStrength;
-            return sum / signalMeasurements.Count;
+            return signalMeasurements.Average(s => s.SignalStrength);
         }
 
         private int CountByStatus(string status)
@@ -180,14 +209,14 @@ namespace signalstrengthanalyzer
         private List<string> Top3ReliableLocations()
         {
             if (!signalMeasurements.Any()) return new List<string>();
-            int minStrength = signalMeasurements.Min(s => s.SignalStrength);
-            int maxStrength = signalMeasurements.Max(s => s.SignalStrength);
+            int min = signalMeasurements.Min(s => s.SignalStrength);
+            int max = signalMeasurements.Max(s => s.SignalStrength);
 
             var locationReliability = signalMeasurements
                 .GroupBy(s => s.Location)
                 .Select(g =>
                 {
-                    double avgNormalized = g.Average(s => ((double)(s.SignalStrength - minStrength) / (maxStrength - minStrength)) * 100);
+                    double avgNormalized = g.Average(s => ((double)(s.SignalStrength - min) / (max - min)) * 100);
                     return new { Location = g.Key, Reliability = avgNormalized };
                 })
                 .OrderByDescending(l => l.Reliability)
@@ -198,6 +227,7 @@ namespace signalstrengthanalyzer
             return locationReliability;
         }
 
+        // -------------------- LOCATIONS --------------------
         private void btnLocations_Click(object sender, EventArgs e)
         {
             LoadLocationsGrid();
@@ -214,7 +244,9 @@ namespace signalstrengthanalyzer
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
             dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             currentView = "Locations";
+            UpdateCurrentViewLabel();
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Device", typeof(string));
@@ -241,92 +273,9 @@ namespace signalstrengthanalyzer
             dataGridView1.DataSource = dt;
         }
 
-        // ------------------- Location Management -------------------
-
-        private void btnAddLocation_Click(object sender, EventArgs e)
-        {
-            string newLoc = Microsoft.VisualBasic.Interaction.InputBox("Enter new location:");
-            if (string.IsNullOrWhiteSpace(newLoc)) return;
-
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                conn.CreateTable<Location>();
-                if (conn.Table<Location>().Any(l => l.LocationName == newLoc)) return;
-                conn.Insert(new Location { LocationName = newLoc });
-            }
-
-            LoadLocationsGrid();
-        }
-
-        private void btnRenameLocation_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.SelectedRows.Count == 0) return;
-            string oldName = dataGridView1.SelectedRows[0].Cells["Location"].Value.ToString();
-            string newName = Microsoft.VisualBasic.Interaction.InputBox("Rename location:", oldName);
-            if (string.IsNullOrWhiteSpace(newName)) return;
-
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                conn.CreateTable<Location>();
-                var loc = conn.Table<Location>().FirstOrDefault(l => l.LocationName == oldName);
-                if (loc != null)
-                {
-                    loc.LocationName = newName;
-                    conn.Update(loc);
-                }
-
-                var signals = conn.Table<SignalMeasurement>().Where(s => s.Location == oldName).ToList();
-                foreach (var s in signals)
-                {
-                    s.Location = newName;
-                    conn.Update(s);
-                }
-            }
-
-            LoadLocationsGrid();
-        }
-
-        private void btnDeleteLocation_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.SelectedRows.Count == 0) return;
-            string name = dataGridView1.SelectedRows[0].Cells["Location"].Value.ToString();
-
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                conn.CreateTable<Location>();
-                var loc = conn.Table<Location>().FirstOrDefault(l => l.LocationName == name);
-                if (loc != null) conn.Delete(loc);
-
-                var signals = conn.Table<SignalMeasurement>().Where(s => s.Location == name).ToList();
-                foreach (var s in signals) conn.Delete(s);
-            }
-
-            LoadLocationsGrid();
-        }
-
-        // ------------------- Data Classes -------------------
-        public class SignalMeasurement
-        {
-            [PrimaryKey, AutoIncrement]
-            public int SignalID { get; set; }
-            public string DeviceName { get; set; }
-            public string Location { get; set; }
-            public int SignalStrength { get; set; }
-            public string Status { get; set; }
-            public DateTime MeasurementDate { get; set; }
-        }
-
-        public class Location
-        {
-            [PrimaryKey, AutoIncrement]
-            public int LocationID { get; set; }
-            public string LocationName { get; set; }
-        }
-
+        // -------------------- REPORTS --------------------
         private void btnReports_Click(object sender, EventArgs e)
         {
-            currentView = "Reports";
-
             LoadMeasurementsFromDB();
             dataGridView1.DataSource = null;
             dataGridView1.Columns.Clear();
@@ -337,7 +286,10 @@ namespace signalstrengthanalyzer
             reportTable.Columns.Add("Item", typeof(string));
             reportTable.Columns.Add("Value / Details", typeof(string));
 
-            // ---------------- Signal Summary ----------------
+            currentView = "Reports";
+            UpdateCurrentViewLabel();
+
+            // Summary
             reportTable.Rows.Add("Summary", "Total Devices", signalMeasurements.Count.ToString());
             reportTable.Rows.Add("Summary", "Excellent Signals", CountByStatus("Excellent").ToString());
             reportTable.Rows.Add("Summary", "Fair Signals", CountByStatus("Fair").ToString());
@@ -346,7 +298,7 @@ namespace signalstrengthanalyzer
             reportTable.Rows.Add("Summary", "Top Location", TopLocation());
             reportTable.Rows.Add("Summary", "Worst Location", WorstLocation());
 
-            // ---------------- Location Analysis ----------------
+            // Location Analysis
             if (signalMeasurements.Any())
             {
                 int minStrength = signalMeasurements.Min(s => s.SignalStrength);
@@ -363,7 +315,7 @@ namespace signalstrengthanalyzer
                 }
             }
 
-            // ---------------- Device Details ----------------
+            // Device Details
             foreach (var s in signalMeasurements)
             {
                 string details = $"Location: {s.Location}, Strength: {s.SignalStrength} dBm, Status: {s.Status}, Date: {s.MeasurementDate}";
@@ -373,7 +325,7 @@ namespace signalstrengthanalyzer
             dataGridView1.DataSource = reportTable;
         }
 
-
+        // -------------------- EXIT / REFRESH --------------------
         private void btnExitadminPanel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -390,9 +342,28 @@ namespace signalstrengthanalyzer
                     LoadLocationsGrid();
                     break;
                 case "Reports":
-                    btnReports_Click(sender, e); // reuse the reports loader
+                    btnReports_Click(sender, e);
                     break;
             }
+        }
+
+        // -------------------- DATA CLASSES --------------------
+        public class SignalMeasurement
+        {
+            [PrimaryKey, AutoIncrement]
+            public int SignalID { get; set; }
+            public string DeviceName { get; set; }
+            public string Location { get; set; }
+            public int SignalStrength { get; set; }
+            public string Status { get; set; }
+            public DateTime MeasurementDate { get; set; }
+        }
+
+        public class Location
+        {
+            [PrimaryKey, AutoIncrement]
+            public int LocationID { get; set; }
+            public string LocationName { get; set; }
         }
     }
 }

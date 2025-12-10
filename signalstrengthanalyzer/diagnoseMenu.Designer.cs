@@ -74,6 +74,7 @@
             lblSignalStrength.Size = new Size(64, 25);
             lblSignalStrength.TabIndex = 4;
             lblSignalStrength.Text = "label2";
+            lblSignalStrength.Click += lblSignalStrength_Click;
             // 
             // label1
             // 

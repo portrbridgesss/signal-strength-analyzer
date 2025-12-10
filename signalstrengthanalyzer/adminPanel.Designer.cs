@@ -36,6 +36,7 @@ namespace signalstrengthanalyzer
             btnLocations = new Button();
             btnDashboards = new Button();
             panel3 = new Panel();
+            label1 = new Label();
             btnRefresh = new Button();
             dataGridView1 = new DataGridView();
             panel1.SuspendLayout();
@@ -79,6 +80,7 @@ namespace signalstrengthanalyzer
             // 
             // btnReports
             // 
+            btnReports.ForeColor = Color.Orange;
             btnReports.Location = new Point(30, 200);
             btnReports.Name = "btnReports";
             btnReports.Size = new Size(139, 32);
@@ -89,6 +91,7 @@ namespace signalstrengthanalyzer
             // 
             // btnLocations
             // 
+            btnLocations.ForeColor = Color.Green;
             btnLocations.Location = new Point(30, 133);
             btnLocations.Name = "btnLocations";
             btnLocations.Size = new Size(139, 32);
@@ -99,6 +102,7 @@ namespace signalstrengthanalyzer
             // 
             // btnDashboards
             // 
+            btnDashboards.ForeColor = Color.Blue;
             btnDashboards.Location = new Point(30, 66);
             btnDashboards.Name = "btnDashboards";
             btnDashboards.Size = new Size(139, 32);
@@ -111,12 +115,23 @@ namespace signalstrengthanalyzer
             // 
             panel3.BackColor = SystemColors.ButtonHighlight;
             panel3.BackgroundImageLayout = ImageLayout.None;
+            panel3.Controls.Add(label1);
             panel3.Controls.Add(btnRefresh);
             panel3.Controls.Add(dataGridView1);
             panel3.Location = new Point(199, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(389, 408);
             panel3.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15F);
+            label1.Location = new Point(22, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(52, 28);
+            label1.TabIndex = 5;
+            label1.Text = "Sync";
             // 
             // btnRefresh
             // 
@@ -134,9 +149,9 @@ namespace signalstrengthanalyzer
             // 
             dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(22, 21);
+            dataGridView1.Location = new Point(22, 46);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(344, 324);
+            dataGridView1.Size = new Size(344, 299);
             dataGridView1.TabIndex = 0;
             // 
             // adminPanel
@@ -151,6 +166,7 @@ namespace signalstrengthanalyzer
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
@@ -171,5 +187,6 @@ namespace signalstrengthanalyzer
         private Button btnRefresh;
         private Label lbladminPanel;
         private Button btnExitadminPanel;
+        private Label label1;
     }
 }

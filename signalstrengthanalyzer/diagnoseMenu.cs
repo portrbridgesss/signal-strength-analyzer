@@ -59,5 +59,10 @@ namespace signalstrengthanalyzer
             if (strength > -70) return "Fair";
             return "Poor";
         }
+
+        private void lblSignalStrength_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
