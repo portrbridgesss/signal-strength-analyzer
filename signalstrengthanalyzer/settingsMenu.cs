@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using signalstrengthanalyzer;
-
+using SQLite;
 
 namespace signalstrengthanalyzer
 {
@@ -43,6 +43,11 @@ namespace signalstrengthanalyzer
                 this.BackColor = SystemColors.Control;
                 this.ForeColor = Color.Black;
             }
+        }
+
+        private void settingsMenu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

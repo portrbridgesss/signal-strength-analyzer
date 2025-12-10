@@ -30,14 +30,14 @@ namespace signalstrengthanalyzer
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnExitadminPanel = new Button();
+            lbladminPanel = new Label();
             btnReports = new Button();
             btnLocations = new Button();
             btnDashboards = new Button();
             panel3 = new Panel();
             btnRefresh = new Button();
             dataGridView1 = new DataGridView();
-            lbladminPanel = new Label();
-            btnExitadminPanel = new Button();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -55,6 +55,27 @@ namespace signalstrengthanalyzer
             panel1.Name = "panel1";
             panel1.Size = new Size(200, 408);
             panel1.TabIndex = 0;
+            // 
+            // btnExitadminPanel
+            // 
+            btnExitadminPanel.Location = new Point(30, 313);
+            btnExitadminPanel.Name = "btnExitadminPanel";
+            btnExitadminPanel.Size = new Size(139, 32);
+            btnExitadminPanel.TabIndex = 6;
+            btnExitadminPanel.Text = "Exit";
+            btnExitadminPanel.UseVisualStyleBackColor = true;
+            btnExitadminPanel.Click += btnExitadminPanel_Click;
+            // 
+            // lbladminPanel
+            // 
+            lbladminPanel.AutoSize = true;
+            lbladminPanel.Font = new Font("Arial Narrow", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbladminPanel.ForeColor = SystemColors.ButtonHighlight;
+            lbladminPanel.Location = new Point(46, 21);
+            lbladminPanel.Name = "lbladminPanel";
+            lbladminPanel.Size = new Size(105, 23);
+            lbladminPanel.TabIndex = 5;
+            lbladminPanel.Text = "Admin Panel";
             // 
             // btnReports
             // 
@@ -107,7 +128,7 @@ namespace signalstrengthanalyzer
             btnRefresh.TabIndex = 4;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = false;
-            btnRefresh.Click += button1_Click_1;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // dataGridView1
             // 
@@ -117,28 +138,6 @@ namespace signalstrengthanalyzer
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(344, 324);
             dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
-            // 
-            // lbladminPanel
-            // 
-            lbladminPanel.AutoSize = true;
-            lbladminPanel.Font = new Font("Arial Narrow", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbladminPanel.ForeColor = SystemColors.ButtonHighlight;
-            lbladminPanel.Location = new Point(46, 21);
-            lbladminPanel.Name = "lbladminPanel";
-            lbladminPanel.Size = new Size(105, 23);
-            lbladminPanel.TabIndex = 5;
-            lbladminPanel.Text = "Admin Panel";
-            // 
-            // btnExitadminPanel
-            // 
-            btnExitadminPanel.Location = new Point(30, 313);
-            btnExitadminPanel.Name = "btnExitadminPanel";
-            btnExitadminPanel.Size = new Size(139, 32);
-            btnExitadminPanel.TabIndex = 6;
-            btnExitadminPanel.Text = "Exit";
-            btnExitadminPanel.UseVisualStyleBackColor = true;
-            btnExitadminPanel.Click += btnExitadminPanel_Click;
             // 
             // adminPanel
             // 

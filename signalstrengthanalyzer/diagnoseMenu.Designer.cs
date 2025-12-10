@@ -44,7 +44,6 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(153, 23);
             comboBox1.TabIndex = 0;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // groupBoxDesignInfo
             // 
@@ -57,7 +56,6 @@
             groupBoxDesignInfo.TabIndex = 1;
             groupBoxDesignInfo.TabStop = false;
             groupBoxDesignInfo.Text = "Device Information";
-            groupBoxDesignInfo.Enter += groupBoxDesignInfo_Enter;
             // 
             // lblStatus
             // 

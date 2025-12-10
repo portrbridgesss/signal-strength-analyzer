@@ -50,7 +50,6 @@
             labelSelectedStatus.Size = new Size(53, 21);
             labelSelectedStatus.TabIndex = 1;
             labelSelectedStatus.Text = "status";
-            labelSelectedStatus.Click += label1_Click;
             // 
             // listBox_Locations
             // 
@@ -94,7 +93,6 @@
             panelColor.Name = "panelColor";
             panelColor.Size = new Size(461, 60);
             panelColor.TabIndex = 7;
-            panelColor.Paint += panelColor_Paint;
             panelColor.MouseClick += panelColor_MouseClick;
             // 
             // labelHeaderName
@@ -128,7 +126,6 @@
             groupBoxStatus.TabIndex = 9;
             groupBoxStatus.TabStop = false;
             groupBoxStatus.Text = "Selected Area Status: ";
-            groupBoxStatus.Enter += groupBoxStatus_Enter;
             // 
             // labelOverallStatus
             // 
@@ -139,7 +136,6 @@
             labelOverallStatus.Size = new Size(53, 21);
             labelOverallStatus.TabIndex = 2;
             labelOverallStatus.Text = "status";
-            labelOverallStatus.Click += labelOverallStatus_Click;
             // 
             // mainMenu
             // 
@@ -157,7 +153,6 @@
             Name = "mainMenu";
             Text = "Form1";
             FormClosing += mainMenu_FormClosing;
-            Load += mainMenu_Load;
             panelColor.ResumeLayout(false);
             panelColor.PerformLayout();
             groupBoxStatus.ResumeLayout(false);

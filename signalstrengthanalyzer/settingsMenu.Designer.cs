@@ -64,6 +64,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "settingsMenu";
             Text = "Settings";
+            Load += settingsMenu_Load;
             ResumeLayout(false);
             PerformLayout();
         }
