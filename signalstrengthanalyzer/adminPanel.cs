@@ -365,5 +365,133 @@ namespace signalstrengthanalyzer
             public int LocationID { get; set; }
             public string LocationName { get; set; }
         }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                conn.CreateTable<Location>();
+                var locations = conn.Table<Location>().OrderBy(l => l.LocationName).ToList();
+
+                Form editForm = new Form()
+                {
+                    Width = 400,
+                    Height = 250,
+                    Text = "Manage Locations",
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    MinimizeBox = false,
+                    MaximizeBox = false
+                };
+
+                Label lbl = new Label() { Left = 20, Top = 20, Text = "Select Location:" };
+                ComboBox combo = new ComboBox() { Left = 20, Top = 50, Width = 340 };
+                combo.Items.AddRange(locations.Select(l => l.LocationName).ToArray());
+                if (combo.Items.Count > 0) combo.SelectedIndex = 0;
+
+                TextBox txtName = new TextBox() { Left = 20, Top = 90, Width = 340 };
+                txtName.PlaceholderText = "New Location Name";
+
+                Button btnAdd = new Button() { Text = "Add", Left = 20, Width = 100, Top = 140 };
+                Button btnRename = new Button() { Text = "Rename", Left = 140, Width = 100, Top = 140 };
+                Button btnDelete = new Button() { Text = "Delete", Left = 260, Width = 100, Top = 140 };
+
+                editForm.Controls.Add(lbl);
+                editForm.Controls.Add(combo);
+                editForm.Controls.Add(txtName);
+                editForm.Controls.Add(btnAdd);
+                editForm.Controls.Add(btnRename);
+                editForm.Controls.Add(btnDelete);
+
+                // Add event handlers
+                btnAdd.Click += (btnSender, btnE) =>
+                {
+                    string newName = txtName.Text.Trim();
+                    if (string.IsNullOrWhiteSpace(newName))
+                    {
+                        MessageBox.Show("Enter a valid name.");
+                        return;
+                    }
+                    if (conn.Table<Location>().Any(loc => loc.LocationName == newName))
+                    {
+                        MessageBox.Show("Location already exists!");
+                        return;
+                    }
+
+                    conn.Insert(new Location { LocationName = newName });
+                    MessageBox.Show($"Location '{newName}' added.");
+                    editForm.Close();
+                };
+
+                btnRename.Click += (btnSender, btnE) =>
+                {
+                    if (combo.SelectedItem == null)
+                    {
+                        MessageBox.Show("Select a location to rename.");
+                        return;
+                    }
+
+                    string oldName = combo.SelectedItem.ToString();
+                    string newName = txtName.Text.Trim();
+                    if (string.IsNullOrWhiteSpace(newName) || newName == oldName)
+                    {
+                        MessageBox.Show("Enter a valid new name.");
+                        return;
+                    }
+                    if (conn.Table<Location>().Any(loc => loc.LocationName == newName))
+                    {
+                        MessageBox.Show("Location already exists!");
+                        return;
+                    }
+
+                    var locToRename = conn.Table<Location>().FirstOrDefault(loc => loc.LocationName == oldName);
+                    if (locToRename != null)
+                    {
+                        locToRename.LocationName = newName;
+                        conn.Update(locToRename);
+                    }
+
+                    // Update signal measurements
+                    var signalsToUpdate = conn.Table<SignalMeasurement>().Where(sig => sig.Location == oldName).ToList();
+                    foreach (var sig in signalsToUpdate)
+                    {
+                        sig.Location = newName;
+                        conn.Update(sig);
+                    }
+
+                    MessageBox.Show($"Location '{oldName}' renamed to '{newName}'.");
+                    editForm.Close();
+                };
+
+                btnDelete.Click += (btnSender, btnE) =>
+                {
+                    if (combo.SelectedItem == null)
+                    {
+                        MessageBox.Show("Select a location to delete.");
+                        return;
+                    }
+
+                    string delName = combo.SelectedItem.ToString();
+                    if (MessageBox.Show($"Are you sure you want to delete '{delName}' and all related signals?",
+                                        "Confirm Delete", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        return;
+
+                    var locToDelete = conn.Table<Location>().FirstOrDefault(loc => loc.LocationName == delName);
+                    if (locToDelete != null) conn.Delete(locToDelete);
+
+                    var signalsToDelete = conn.Table<SignalMeasurement>().Where(sig => sig.Location == delName).ToList();
+                    foreach (var sig in signalsToDelete) conn.Delete(sig);
+
+                    MessageBox.Show($"Location '{delName}' deleted.");
+                    editForm.Close();
+                };
+
+                editForm.ShowDialog();
+            }
+
+            // Refresh the grid regardless of current view
+            if (currentView == "Locations")
+                LoadLocationsGrid();
+        }
     }
 }

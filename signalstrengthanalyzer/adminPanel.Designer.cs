@@ -39,6 +39,7 @@ namespace signalstrengthanalyzer
             label1 = new Label();
             btnRefresh = new Button();
             dataGridView1 = new DataGridView();
+            btnEdit = new Button();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -47,6 +48,7 @@ namespace signalstrengthanalyzer
             // panel1
             // 
             panel1.BackColor = SystemColors.MenuHighlight;
+            panel1.Controls.Add(btnEdit);
             panel1.Controls.Add(btnExitadminPanel);
             panel1.Controls.Add(lbladminPanel);
             panel1.Controls.Add(btnReports);
@@ -59,7 +61,7 @@ namespace signalstrengthanalyzer
             // 
             // btnExitadminPanel
             // 
-            btnExitadminPanel.Location = new Point(30, 313);
+            btnExitadminPanel.Location = new Point(30, 337);
             btnExitadminPanel.Name = "btnExitadminPanel";
             btnExitadminPanel.Size = new Size(139, 32);
             btnExitadminPanel.TabIndex = 6;
@@ -129,9 +131,9 @@ namespace signalstrengthanalyzer
             label1.Font = new Font("Segoe UI", 15F);
             label1.Location = new Point(22, 15);
             label1.Name = "label1";
-            label1.Size = new Size(52, 28);
+            label1.Size = new Size(90, 28);
             label1.TabIndex = 5;
-            label1.Text = "Sync";
+            label1.Text = "Indicator";
             // 
             // btnRefresh
             // 
@@ -153,6 +155,17 @@ namespace signalstrengthanalyzer
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(344, 299);
             dataGridView1.TabIndex = 0;
+            // 
+            // btnEdit
+            // 
+            btnEdit.ForeColor = Color.Red;
+            btnEdit.Location = new Point(30, 270);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(139, 32);
+            btnEdit.TabIndex = 7;
+            btnEdit.Text = "Edit";
+            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // adminPanel
             // 
@@ -188,5 +201,6 @@ namespace signalstrengthanalyzer
         private Label lbladminPanel;
         private Button btnExitadminPanel;
         private Label label1;
+        private Button btnEdit;
     }
 }

@@ -52,7 +52,8 @@ namespace signalstrengthanalyzer
             f1.LoadLocationsFromMain(listBox_Locations.Items);
             f1.ShowDialog();
 
-            // Optional: update mainMenu display or status after analyze
+            LoadLocations(); // <- Refresh after returning from diagnoseMenu
+
             labelSelectedStatus.Text = "Analyzed";
             labelSelectedStatus.ForeColor = Color.Blue;
             labelOverallStatus.Text = "Updated";
@@ -64,8 +65,14 @@ namespace signalstrengthanalyzer
             clickCount++;
             if (clickCount >= 5)
             {
-                adminPanel secretForm = new adminPanel();
-                secretForm.ShowDialog();
+                using (adminPanel secretForm = new adminPanel())
+                {
+                    secretForm.ShowDialog();
+                }
+
+                // Refresh locations after adminPanel is closed
+                LoadLocations();
+
                 clickCount = 0;
             }
         }
@@ -97,6 +104,7 @@ namespace signalstrengthanalyzer
         {
             settingsMenu f2 = new settingsMenu();
             f2.ShowDialog();
+            // <- Refresh after returning from settings
         }
     }
 }
