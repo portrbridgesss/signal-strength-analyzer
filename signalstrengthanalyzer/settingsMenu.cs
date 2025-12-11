@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using signalstrengthanalyzer;
-using SQLite;
 
 namespace signalstrengthanalyzer
 {
@@ -17,37 +8,24 @@ namespace signalstrengthanalyzer
         public settingsMenu()
         {
             InitializeComponent();
-
-
-        }
-
-        private void labelSettings_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void checkBoxDarkMode_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (checkBoxDarkMode.Checked)
-            {
-                // Dark Mode
-                this.BackColor = Color.FromArgb(30, 30, 30); // Dark Gray
-                this.ForeColor = Color.White;
-
-                // You would need to do this for the Main Menu too
-            }
-            else
-            {
-                // Light Mode
-                this.BackColor = SystemColors.Control;
-                this.ForeColor = Color.Black;
-            }
         }
 
         private void settingsMenu_Load(object sender, EventArgs e)
         {
+            // 1. Set the checkbox to match the current global state
+            checkBoxDarkMode.Checked = ThemeManager.IsDarkMode;
 
+            // 2. Apply the theme to this form immediately
+            ThemeManager.ApplyTheme(this);
+        }
+
+        private void checkBoxDarkMode_CheckedChanged_1(object sender, EventArgs e)
+        {
+            // 1. Update the global variable
+            ThemeManager.IsDarkMode = checkBoxDarkMode.Checked;
+
+            // 2. Apply changes to THIS form immediately so you can see it
+            ThemeManager.ApplyTheme(this);
         }
     }
 }

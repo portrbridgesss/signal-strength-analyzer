@@ -55,25 +55,24 @@
             groupBoxDesignInfo.Size = new Size(200, 246);
             groupBoxDesignInfo.TabIndex = 1;
             groupBoxDesignInfo.TabStop = false;
-            groupBoxDesignInfo.Text = "Device Information";
+            groupBoxDesignInfo.Text = "Diagnosis ";
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(17, 103);
+            lblStatus.Location = new Point(15, 64);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(64, 25);
+            lblStatus.Size = new Size(0, 25);
             lblStatus.TabIndex = 5;
-            lblStatus.Text = "label2";
             // 
             // lblSignalStrength
             // 
             lblSignalStrength.AutoSize = true;
-            lblSignalStrength.Location = new Point(17, 36);
+            lblSignalStrength.Location = new Point(15, 39);
             lblSignalStrength.Name = "lblSignalStrength";
-            lblSignalStrength.Size = new Size(64, 25);
+            lblSignalStrength.Size = new Size(93, 25);
             lblSignalStrength.TabIndex = 4;
-            lblSignalStrength.Text = "label2";
+            lblSignalStrength.Text = "Waiting...";
             lblSignalStrength.Click += lblSignalStrength_Click;
             // 
             // label1

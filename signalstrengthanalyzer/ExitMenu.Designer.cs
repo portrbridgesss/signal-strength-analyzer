@@ -36,22 +36,21 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = SystemColors.ControlLight;
             label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(11, 9);
+            label1.Location = new Point(19, 9);
             label1.Name = "label1";
-            label1.Size = new Size(459, 37);
+            label1.Size = new Size(452, 37);
             label1.TabIndex = 0;
-            label1.Text = "Do You Want to Exit The Program?";
+            label1.Text = "Do you want to exit the program?";
             label1.Click += label1_Click;
             // 
             // button1
             // 
             button1.BackColor = Color.FromArgb(0, 192, 0);
             button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(42, 67);
+            button1.Location = new Point(56, 63);
             button1.Name = "button1";
-            button1.Size = new Size(177, 86);
+            button1.Size = new Size(177, 49);
             button1.TabIndex = 1;
             button1.Text = "YES";
             button1.UseVisualStyleBackColor = false;
@@ -61,9 +60,9 @@
             // 
             button2.BackColor = Color.Red;
             button2.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(262, 67);
+            button2.Location = new Point(239, 63);
             button2.Name = "button2";
-            button2.Size = new Size(178, 86);
+            button2.Size = new Size(177, 49);
             button2.TabIndex = 2;
             button2.Text = "NO!!!";
             button2.UseVisualStyleBackColor = false;
@@ -73,13 +72,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(484, 167);
+            ClientSize = new Size(483, 136);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "ExitMenu";
-            Text = "ExitMenu";
+            Text = "Exit";
             ResumeLayout(false);
             PerformLayout();
         }

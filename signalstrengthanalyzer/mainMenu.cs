@@ -17,17 +17,21 @@ namespace signalstrengthanalyzer
         {
             InitializeComponent();
             LoadLocations();
+            UpdateOverallStatus(); // Calculate overall status on startup
+            UpdateRecentActivity();
+            ThemeManager.ApplyTheme(this); //dark mode!!
         }
 
         private void LoadLocations()
         {
+            string currentSelection = listBox_Locations.SelectedItem?.ToString();
+
             listBox_Locations.Items.Clear();
             using (var conn = new SQLiteConnection(dbPath))
             {
                 conn.CreateTable<adminPanel.Location>();
+                conn.CreateTable<adminPanel.SignalMeasurement>();
                 var locations = conn.Table<adminPanel.Location>().ToList();
-
-                // Add default locations if DB is empty
                 if (!locations.Any())
                 {
                     string[] defaultLocs = { "A Building", "Jubilee Library", "Apo Pilo", "JVD Building", "Outdoor Patio", "Tonus Gym" };
@@ -42,22 +46,107 @@ namespace signalstrengthanalyzer
                     foreach (var loc in locations) listBox_Locations.Items.Add(loc.LocationName);
                 }
             }
+
+            // Restore selection if it still exists
+            if (currentSelection != null && listBox_Locations.Items.Contains(currentSelection))
+            {
+                listBox_Locations.SelectedItem = currentSelection;
+            }
+        }
+        private void GetStatusInfo(double strength, out string text, out Color color)
+        {
+            if (strength > -50)
+            {
+                text = "Excellent";
+                color = Color.Green;
+            }
+            else if (strength > -70)
+            {
+                text = "Fair";
+                color = Color.Orange;
+            }
+            else
+            {
+                text = "Poor";
+                color = Color.Red;
+            }
+        }
+        private void UpdateLocationStatus(string locationName)
+        {
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                var measurements = conn.Table<adminPanel.SignalMeasurement>()
+                                       .Where(s => s.Location == locationName)
+                                       .ToList();
+
+                if (measurements.Any())
+                {
+                    double avg = measurements.Average(s => s.SignalStrength);
+                    GetStatusInfo(avg, out string statusText, out Color statusColor);
+
+                    labelSelectedStatus.Text = statusText;
+                    labelSelectedStatus.ForeColor = statusColor;
+                }
+                else
+                {
+                    labelSelectedStatus.Text = "No Data";
+                    labelSelectedStatus.ForeColor = Color.Gray;
+                }
+            }
+        }
+        private void UpdateOverallStatus()
+        {
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                var allMeasurements = conn.Table<adminPanel.SignalMeasurement>().ToList();
+
+                if (allMeasurements.Any())
+                {
+                    double avg = allMeasurements.Average(s => s.SignalStrength);
+                    GetStatusInfo(avg, out string statusText, out Color statusColor);
+
+                    labelOverallStatus.Text = statusText;
+                    labelOverallStatus.ForeColor = statusColor;
+                }
+                else
+                {
+                    labelOverallStatus.Text = "No Data";
+                    labelOverallStatus.ForeColor = Color.Gray;
+                }
+            }
         }
 
         private void buttonAnalyze_Click(object sender, EventArgs e)
         {
-            if (listBox_Locations.SelectedItem == null) return;
+            if (listBox_Locations.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a location first.");
+                return;
+            }
 
             diagnoseMenu f1 = new diagnoseMenu();
             f1.LoadLocationsFromMain(listBox_Locations.Items);
             f1.ShowDialog();
+            LoadLocations();
+            UpdateOverallStatus();
+            if (listBox_Locations.SelectedItem != null)
+            {
+                string selectedLoc = listBox_Locations.SelectedItem.ToString();
+                UpdateLocationStatus(selectedLoc);
+                UpdateRecentActivity(selectedLoc);
+            }
+        }
 
-            LoadLocations(); // <- Refresh after returning from diagnoseMenu
+        private void listBox_Locations_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-            labelSelectedStatus.Text = "Analyzed";
-            labelSelectedStatus.ForeColor = Color.Blue;
-            labelOverallStatus.Text = "Updated";
-            labelOverallStatus.ForeColor = Color.Blue;
+            if (listBox_Locations.SelectedItem != null)
+            {
+                string selectedLoc = listBox_Locations.SelectedItem.ToString();
+                UpdateLocationStatus(selectedLoc);
+
+                UpdateRecentActivity(selectedLoc);
+            }
         }
 
         private void panelColor_MouseClick(object sender, MouseEventArgs e)
@@ -70,8 +159,16 @@ namespace signalstrengthanalyzer
                     secretForm.ShowDialog();
                 }
 
-                // Refresh locations after adminPanel is closed
+                // Refresh everything
                 LoadLocations();
+                UpdateOverallStatus();
+
+                if (listBox_Locations.SelectedItem != null)
+                {
+                    string selectedLoc = listBox_Locations.SelectedItem.ToString();
+                    UpdateLocationStatus(selectedLoc);
+                    UpdateRecentActivity(selectedLoc);
+                }
 
                 clickCount = 0;
             }
@@ -89,22 +186,51 @@ namespace signalstrengthanalyzer
             }
         }
 
-        private void listBox_Locations_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBox_Locations.SelectedItem != null)
-            {
-                labelSelectedStatus.Text = "Normal";
-                labelSelectedStatus.ForeColor = Color.Green;
-                labelOverallStatus.Text = "Normal";
-                labelOverallStatus.ForeColor = Color.Green;
-            }
-        }
-
         private void buttonSettings_Click(object sender, EventArgs e)
         {
             settingsMenu f2 = new settingsMenu();
             f2.ShowDialog();
-            // <- Refresh after returning from settings
+            ThemeManager.ApplyTheme(this);
+        }
+
+        private void mainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void UpdateRecentActivity(string locationName = null)
+        {
+            lblRecent1.Text = "";
+            lblRecent2.Text = "";
+            if (string.IsNullOrEmpty(locationName)) return;
+            using (var conn = new SQLiteConnection(dbPath))
+            {
+                var recentItems = conn.Table<adminPanel.SignalMeasurement>()
+                                      .Where(s => s.Location == locationName)
+                                      .OrderByDescending(s => s.MeasurementDate)
+                                      .Take(2)
+                                      .ToList();
+
+                if (recentItems.Count > 0)
+                {
+                    var item = recentItems[0];
+                    lblRecent1.Text = $"{item.SignalStrength} dBm ({item.Status})";
+                    lblRecent1.ForeColor = item.SignalStrength > -50 ? Color.Green :
+                                           item.SignalStrength > -70 ? Color.Orange : Color.Red;
+                }
+
+                if (recentItems.Count > 1)
+                {
+                    var item = recentItems[1];
+                    lblRecent2.Text = $"{item.SignalStrength} dBm ({item.Status})";
+                    lblRecent2.ForeColor = item.SignalStrength > -50 ? Color.Green :
+                                           item.SignalStrength > -70 ? Color.Orange : Color.Red;
+                }
+            }
+        }
+
+        private void labelSubscript_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

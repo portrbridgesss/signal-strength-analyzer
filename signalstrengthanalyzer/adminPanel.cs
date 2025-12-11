@@ -21,8 +21,10 @@ namespace signalstrengthanalyzer
             InitializeComponent();
             InitializeDatabase();
             LoadMeasurementsFromDB();
+            ThemeManager.ApplyTheme(this);//dark mode
             this.Shown += AdminPanel_Shown;
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+
         }
 
         private void AdminPanel_Shown(object sender, EventArgs e)
@@ -49,15 +51,37 @@ namespace signalstrengthanalyzer
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            // 1. Reset selection colors to look good in both modes
+            dataGridView1.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.White;
+
             if (currentView == "Dashboard")
             {
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     string metric = row.Cells[0].Value?.ToString() ?? "";
-                    if (metric.Contains("Excellent")) row.DefaultCellStyle.BackColor = Color.LightGreen;
-                    else if (metric.Contains("Fair")) row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
-                    else if (metric.Contains("Poor")) row.DefaultCellStyle.BackColor = Color.LightCoral;
-                    else row.DefaultCellStyle.BackColor = Color.LightCyan;
+
+                    // Force BLACK text on these light backgrounds
+                    if (metric.Contains("Excellent"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else if (metric.Contains("Fair"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else if (metric.Contains("Poor"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightCoral;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightCyan;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
                 }
             }
             else if (currentView == "Locations")
@@ -66,9 +90,23 @@ namespace signalstrengthanalyzer
                 {
                     if (row.Cells["Signal Strength"].Value == null) continue;
                     int strength = Convert.ToInt32(row.Cells["Signal Strength"].Value);
-                    if (strength > -50) row.DefaultCellStyle.BackColor = Color.LightGreen;
-                    else if (strength > -70) row.DefaultCellStyle.BackColor = Color.Orange;
-                    else row.DefaultCellStyle.BackColor = Color.LightCoral;
+
+                    // Force BLACK text
+                    if (strength > -50)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else if (strength > -70)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Orange;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightCoral;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
                 }
             }
             else if (currentView == "Reports")
@@ -76,26 +114,43 @@ namespace signalstrengthanalyzer
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     string category = row.Cells[0].Value.ToString();
+
                     if (category == "Summary")
                     {
                         row.DefaultCellStyle.BackColor = Color.LightCyan;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
                         row.DefaultCellStyle.Font = new Font(dataGridView1.Font, FontStyle.Bold);
                     }
                     else if (category == "Location")
                     {
                         row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
                     }
                     else if (category == "Detail")
                     {
                         string details = row.Cells[2].Value.ToString();
-                        if (details.Contains("Excellent")) row.DefaultCellStyle.BackColor = Color.LightGreen;
-                        else if (details.Contains("Fair")) row.DefaultCellStyle.BackColor = Color.Orange;
-                        else if (details.Contains("Poor")) row.DefaultCellStyle.BackColor = Color.LightCoral;
-                        else row.DefaultCellStyle.BackColor = Color.White;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = Color.White;
+
+                        if (details.Contains("Excellent"))
+                        {
+                            row.DefaultCellStyle.BackColor = Color.LightGreen;
+                            row.DefaultCellStyle.ForeColor = Color.Black;
+                        }
+                        else if (details.Contains("Fair"))
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Orange;
+                            row.DefaultCellStyle.ForeColor = Color.Black;
+                        }
+                        else if (details.Contains("Poor"))
+                        {
+                            row.DefaultCellStyle.BackColor = Color.LightCoral;
+                            row.DefaultCellStyle.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            // If no color is assigned, respect the Dark Mode theme
+                            row.DefaultCellStyle.BackColor = ThemeManager.IsDarkMode ? Color.FromArgb(60, 60, 60) : Color.White;
+                            row.DefaultCellStyle.ForeColor = ThemeManager.IsDarkMode ? Color.White : Color.Black;
+                        }
                     }
                 }
             }
@@ -114,20 +169,23 @@ namespace signalstrengthanalyzer
             {
                 label1.Text = $"Current View: {currentView}";
 
-                // Change text color based on view
+                // Check if we are in Dark Mode
+                bool isDark = ThemeManager.IsDarkMode;
+
+                // Change text color based on view AND theme
                 switch (currentView)
                 {
                     case "Dashboard":
-                        label1.ForeColor = Color.Blue;
+                        label1.ForeColor = isDark ? Color.Cyan : Color.Blue;
                         break;
                     case "Locations":
-                        label1.ForeColor = Color.Green;
+                        label1.ForeColor = isDark ? Color.Lime : Color.Green;
                         break;
                     case "Reports":
-                        label1.ForeColor = Color.Orange;
+                        label1.ForeColor = isDark ? Color.Gold : Color.Orange;
                         break;
                     default:
-                        label1.ForeColor = Color.Black;
+                        label1.ForeColor = isDark ? Color.White : Color.Black;
                         break;
                 }
             }

@@ -36,7 +36,11 @@
             labelHeaderName = new Label();
             label1 = new Label();
             groupBoxStatus = new GroupBox();
+            label2 = new Label();
+            lblRecent2 = new Label();
+            lblRecent1 = new Label();
             labelOverallStatus = new Label();
+            labelSubscript = new Label();
             panelColor.SuspendLayout();
             groupBoxStatus.SuspendLayout();
             SuspendLayout();
@@ -47,9 +51,8 @@
             labelSelectedStatus.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelSelectedStatus.Location = new Point(8, 23);
             labelSelectedStatus.Name = "labelSelectedStatus";
-            labelSelectedStatus.Size = new Size(53, 21);
+            labelSelectedStatus.Size = new Size(0, 21);
             labelSelectedStatus.TabIndex = 1;
-            labelSelectedStatus.Text = "status";
             // 
             // listBox_Locations
             // 
@@ -65,7 +68,7 @@
             // buttonAnalyze
             // 
             buttonAnalyze.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonAnalyze.Location = new Point(264, 233);
+            buttonAnalyze.Location = new Point(264, 248);
             buttonAnalyze.Name = "buttonAnalyze";
             buttonAnalyze.Size = new Size(185, 94);
             buttonAnalyze.TabIndex = 4;
@@ -86,7 +89,8 @@
             // 
             // panelColor
             // 
-            panelColor.BackColor = SystemColors.ActiveCaption;
+            panelColor.BackColor = Color.FromArgb(25, 25, 150);
+            panelColor.Controls.Add(labelSubscript);
             panelColor.Controls.Add(labelHeaderName);
             panelColor.Dock = DockStyle.Top;
             panelColor.Location = new Point(0, 0);
@@ -118,14 +122,44 @@
             // 
             // groupBoxStatus
             // 
+            groupBoxStatus.Controls.Add(label2);
+            groupBoxStatus.Controls.Add(lblRecent2);
+            groupBoxStatus.Controls.Add(lblRecent1);
             groupBoxStatus.Controls.Add(labelSelectedStatus);
             groupBoxStatus.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             groupBoxStatus.Location = new Point(264, 100);
             groupBoxStatus.Name = "groupBoxStatus";
-            groupBoxStatus.Size = new Size(185, 116);
+            groupBoxStatus.Size = new Size(185, 142);
             groupBoxStatus.TabIndex = 9;
             groupBoxStatus.TabStop = false;
             groupBoxStatus.Text = "Selected Area Status: ";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 54);
+            label2.Name = "label2";
+            label2.Size = new Size(128, 20);
+            label2.TabIndex = 4;
+            label2.Text = "Previous Reports:";
+            // 
+            // lblRecent2
+            // 
+            lblRecent2.AutoSize = true;
+            lblRecent2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblRecent2.Location = new Point(8, 95);
+            lblRecent2.Name = "lblRecent2";
+            lblRecent2.Size = new Size(0, 21);
+            lblRecent2.TabIndex = 3;
+            // 
+            // lblRecent1
+            // 
+            lblRecent1.AutoSize = true;
+            lblRecent1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblRecent1.Location = new Point(8, 74);
+            lblRecent1.Name = "lblRecent1";
+            lblRecent1.Size = new Size(0, 21);
+            lblRecent1.TabIndex = 2;
             // 
             // labelOverallStatus
             // 
@@ -133,9 +167,20 @@
             labelOverallStatus.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelOverallStatus.Location = new Point(158, 76);
             labelOverallStatus.Name = "labelOverallStatus";
-            labelOverallStatus.Size = new Size(53, 21);
+            labelOverallStatus.Size = new Size(0, 21);
             labelOverallStatus.TabIndex = 2;
-            labelOverallStatus.Text = "status";
+            // 
+            // labelSubscript
+            // 
+            labelSubscript.AutoSize = true;
+            labelSubscript.Font = new Font("Consolas", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelSubscript.ForeColor = Color.WhiteSmoke;
+            labelSubscript.Location = new Point(384, 44);
+            labelSubscript.Name = "labelSubscript";
+            labelSubscript.Size = new Size(73, 13);
+            labelSubscript.TabIndex = 11;
+            labelSubscript.Text = "(ng comsci)";
+            labelSubscript.Click += labelSubscript_Click;
             // 
             // mainMenu
             // 
@@ -153,6 +198,7 @@
             Name = "mainMenu";
             Text = "Form1";
             FormClosing += mainMenu_FormClosing;
+            Load += mainMenu_Load;
             panelColor.ResumeLayout(false);
             panelColor.PerformLayout();
             groupBoxStatus.ResumeLayout(false);
@@ -171,5 +217,9 @@
         private GroupBox groupBoxStatus;
         private Label labelOverallStatus;
         private Label labelHeaderName;
+        private Label lblRecent2;
+        private Label lblRecent1;
+        private Label label2;
+        private Label labelSubscript;
     }
 }
