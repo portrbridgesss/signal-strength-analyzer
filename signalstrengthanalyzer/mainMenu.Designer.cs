@@ -173,11 +173,11 @@
             // labelSubscript
             // 
             labelSubscript.AutoSize = true;
-            labelSubscript.Font = new Font("Consolas", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelSubscript.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelSubscript.ForeColor = Color.WhiteSmoke;
-            labelSubscript.Location = new Point(384, 44);
+            labelSubscript.Location = new Point(378, 43);
             labelSubscript.Name = "labelSubscript";
-            labelSubscript.Size = new Size(73, 13);
+            labelSubscript.Size = new Size(84, 14);
             labelSubscript.TabIndex = 11;
             labelSubscript.Text = "(ng comsci)";
             labelSubscript.Click += labelSubscript_Click;
