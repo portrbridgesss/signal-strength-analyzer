@@ -1,4 +1,4 @@
-need ba ng patch notes? lmao
+need ba ng patch notes? lmao/n
 Update on Dec 11, 2025
   -Main menu overhauled
   -Signal Status now shows on location click
