@@ -14,6 +14,7 @@ namespace signalstrengthanalyzer
         public diagnoseMenu()
         {
             InitializeComponent();
+            ThemeManager.ApplyTheme(this);//darkmode
         }
 
         public void LoadLocationsFromMain(ListBox.ObjectCollection locations)

@@ -15,6 +15,7 @@ namespace signalstrengthanalyzer
         public ExitMenu()
         {
             InitializeComponent();
+            ThemeManager.ApplyTheme(this);//darkmode
         }
 
         private void label1_Click(object sender, EventArgs e)
