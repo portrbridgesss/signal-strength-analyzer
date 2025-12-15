@@ -1,4 +1,7 @@
-need ba ng patch notes? lmao
+### Overview
+This program is designed to analyze and display the current signal quality in an area, it allows the user to add, edit or remove locations via an admin panel using SQLite technology.
+
+Signal quality is currently randomly generated as an example of the idea.
 
 ---
 
